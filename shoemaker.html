@@ -1,0 +1,44 @@
+<HTML>
+ <HEAD>
+  <TITLE>Shoemaker v.2.2</TITLE>
+  <SCRIPT TYPE="text/javascript" SRC="shoemaker.js"></SCRIPT>
+  <STYLE>
+   div   {width: 600px}
+   input {text-align: center; float: right}
+  </STYLE>
+ <HEAD>
+ <BODY>
+  <DIV ID="Name">
+   Name:&nbsp;
+   <INPUT ID="Name_Data" TYPE="text">
+  </DIV>
+  <BR>
+  <DIV ID="Birthdate">
+   Birthdate:&nbsp;
+   <INPUT ID="Birthdate_Data" TYPE="date">
+  </DIV>
+  <BR>
+  <DIV ID="Birthplace">
+   Birthplace (Plus.Code):&nbsp;
+   <INPUT ID="Birthplace_Data" TYPE="text">
+  </DIV>
+  <BR>
+  <DIV ID="Citizenship">
+   Citizenship (Plus.Code or Shortname):&nbsp;
+   <INPUT ID="Citizenship_Data" TYPE="text">
+  </DIV>
+  <BR>
+  <DIV ID="CriminalSIN">
+   Criminal SIN:&nbsp;
+   <INPUT ID="CriminalSIN_Data" TYPE="checkbox">
+  </DIV>
+  <BR>
+  <DIV ID="RunProg">
+   Press&nbsp;
+   <A HREF="javascript:window.alert(generateSIN(Name_Data.value, new Date(Birthdate_Data.value), Birthplace_Data.value, Citizenship_Data.value, CriminalSIN_Data.checked))">
+    here
+   </A>&nbsp;
+   to have Shoemaker generate your SIN.
+  </DIV>
+ </BODY>
+</HTML>
