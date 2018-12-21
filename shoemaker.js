@@ -177,7 +177,7 @@ var encode = function (where)
  }
 
  // Detect and handle invalid where data.
- where = where.split("+")[0]; // Autotruncate extended precision plus codes.
+ where = where.split("+")[0] + "+"; // Autotruncate extended precision plus codes.
  if (9 !== where.length)
  {throw new Error("Invalid where (9 Character String Expected) submitted to encode: " + where);
  }
