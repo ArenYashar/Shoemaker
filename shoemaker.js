@@ -1,6 +1,6 @@
 // Shadowrun SIN Generator (shoemaker.js)
 // Written by: /u/ArenYashar
-// Version 2.1
+// Version 2.12
 
 // Helper Functions
 var calculateSINchecksum = function (SIN, isCriminalSIN)
@@ -81,8 +81,19 @@ var encodeBirthdate = function (date)
  date.setUTCSeconds(0);
  date.setUTCMilliseconds(0);
 
- // Convert the date to a bastardized UNIX time in base 36 notation.
- return parseInt(date.valueOf()/100000).toString(36).toUpperCase();
+ // Convert the date to a thousandth of it's UNIX time value.
+ date = parseInt(date.valueOf() / 1000000);
+
+ // Catch and handle the edge cases.
+ if (date < 0) // If before January 1, 1970
+ {return "00000";
+ }
+ if (date > 25914075) // If after February 4, 3886
+ {return "ZZZZZ";
+ }
+
+ // Convert to base 36 notation.
+ return date.toString(36).toUpperCase().padStart(5, "0");
 };
 
 var encode = function (where)
@@ -243,9 +254,9 @@ function testSIN(name, birthdate, birthplace, citizenship, expectedSIN)
  console.log("[" + name + ", " + birthdate + ", " + birthplace + ", " + citizenship + " should give us " + expectedSIN + " and we get " + generateSIN(name, birthdate, birthplace, citizenship));
  return generateSIN(name, birthdate, birthplace, citizenship) === expectedSIN;
 }
-if (testSIN("Charles Arthur Mallory", new Date("December 16, 2033"), "85FQP200+", "UCAS", "C88C05-7ALFC-MCQ40U") &&
-    testSIN("John Edward Thorpe", new Date("May 15, 2025"), "85V4MH00+", "SSC", "A88JE5-4EIVW-T04V0B") &&
-    testSIN("Eugene Yoshi Edwards", new Date("October 4, 2024"), "849VQH00+", "CFS", "A88EA4-4YD9C-ECVW0Z") === true)
+if (testSIN("Charles Arthur Mallory", new Date("December 16, 2033"), "85FQP200+", "UCAS", "188C75-7A9FC-MCQ40E") &&
+    testSIN("John Edward Thorpe", new Date("May 15, 2025"), "85V4MH00+", "SSC", "188J15-4EGVW-T74V71") &&
+    testSIN("Eugene Yoshi Edwards", new Date("October 4, 2024"), "849VQH00+", "CFS", "188E14-4Y19C-ECVW05") === true)
 {
  console.log("[OK] SIN Generator");
 }/**/
