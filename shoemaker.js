@@ -1,6 +1,6 @@
 // Shadowrun SIN Generator (shoemaker.js)
 // Written by: /u/ArenYashar
-// Version 2.12
+// Version 2.13
 
 // Helper Functions
 var calculateSINchecksum = function (SIN, isCriminalSIN)
@@ -49,14 +49,19 @@ var extractInitials = function (name)
  {throw new Error("Invalid name (String Expected) submitted to extractInitials: " + name);
  }
 
- // Reject incomplete names
- if (2 !== name.split(" ").length - 1)
- {throw new Error("Invalid name (First Middle and Last names Expected) submitted to extractInitials: " + name);
+ // Return the initials
+ switch (name.split(" ").length)
+ {case 0: // In the absence of any names, we could use a placeholder of "000".
+   throw new Error("Invalid name (First Middle and Last names Expected) submitted to extractInitials: " + name);
+  case 1: // In the absence of a middle and last name, use a placeholder of "0".
+   return (name.split(" ")[0][0] + "00").toUpperCase();
+  case 2: // In the absence of a last name, use a placeholder of "0".
+   return (name.split(" ")[0][0] + "0" + name.split(" ")[1][0]).toUpperCase();
+  case 3: // With first, middle, and last names, no placeholders are necessary.
+   return (name.split(" ")[0][0] + name.split(" ")[1][0] + name.split(" ")[2][0]).toUpperCase();
+  default: // With multiple middle names, ignore all but the first provided middle name.
+   return (name.split(" ")[0][0] + name.split(" ")[1][0] + name.split(" ")[name.split(" ").length - 1][0]).toUpperCase();
  }
-
- var initials = name.split(" ")[0][0] + name.split(" ")[1][0] + name.split(" ")[2][0];
-
- return initials.toUpperCase();
 };
 
 var encodeBirthdate = function (date)
